@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
+             http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
+
+	<portlet>
+		<description>UI for searching and viewing kustantajahintatiedot</description>
+		<portlet-name>kuhiti-portlet</portlet-name>
+		<display-name>Kustantajahintatiedot</display-name>
+		<portlet-class>fi.csc.avaa.vaadin.portlet.AvaaPortlet</portlet-class>
+		
+		<init-param>
+            <name>UIProvider</name>
+            <value>fi.csc.avaa.kuhiti.vaadin.portlet.UIProvider</value>
+        </init-param>
+        
+        <init-param>
+        	<name>DEFAULT_LOCALE</name>
+        	<value>fi_FI</value>
+        </init-param>
+        
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
+		</supports>
+		
+		<portlet-info>
+			<title>Kustantajahintatiedot</title>
+			<short-title>kuhiti</short-title>
+		</portlet-info>
+
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+</portlet-app>

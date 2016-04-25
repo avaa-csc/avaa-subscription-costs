@@ -1,0 +1,132 @@
+body.v-modal-window-open {
+	overflow: hidden !important;
+}
+
+.valo.v-app, .valo.v-app-loading {
+	font-weight: 500 !important;
+}
+
+.valo .v-grid-cell {
+	padding-left: 2px !important;
+	padding-right: 0px !important;	
+}
+
+.v-app.valo {
+	background-color: white !important;
+}
+
+.valo .v-button-link:active {
+    opacity: 0.0 !important;
+}
+
+.borderless {
+    border: none;
+    background: transparent no-repeat;
+    outline: none;
+    text-decoration: none !important;
+    font-weight: none !important;
+    vertical-align: top !important;
+}
+
+.language-btn {
+	color: black !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+}
+
+.bold {
+	font-weight: bold !important;
+}
+
+.underline {
+	text-decoration: underline !important;
+}
+
+.download-link {
+    white-space: pre-wrap !important;
+    margin-bottom: 30px !important;
+    margin-top: 20px !important;
+    color: blue !important;
+}
+
+.download-link .v-button-caption {
+	font-size: 18px !important;
+}
+
+#search-input {
+	border-color: #999 !important;
+	color: #888 !important;
+	font-size: 14px !important;
+}
+
+.filters-layout .filter-layout:not(:last-child) {
+	margin-right: 30px;
+}
+
+.subscriptioncost-grid .grid-cell-wrap {
+	white-space: normal !important;
+}
+
+.subscriptioncost-grid .price {
+	text-align: right !important;
+	padding-right: 4px !important;
+}
+
+.subscriptioncost-grid .orgtype, .subscriptioncost-grid .orgname, .subscriptioncost-grid .publisher, .subscriptioncost-grid .year {
+	text-align: center !important;
+}
+
+.subscriptioncost-grid .v-grid-body .v-grid-cell {
+	height: 50px !important;
+	font-size: 14px !important;
+	line-height: 1.5 !important;
+}
+
+.subscriptioncost-grid .v-grid-header .v-grid-cell {
+	text-align: center !important;
+	font-weight: bold !important;
+}
+
+.subscriptioncost-grid .v-grid-header .v-grid-column-header-content {
+	font-weight: bold !important;
+	background-color: #ddbff7!important;
+	background-image: none !important;
+	white-space: normal !important;
+    line-height: 1.4 !important;
+    height: 40px !important;
+}
+
+.subscriptioncost-grid .v-grid-row:hover .v-grid-cell {
+    background-color: #C7ADAD;
+}
+
+@media screen and (max-width: 500px) {
+	.reset-search {
+		display: none !important;
+	}	
+}
+
+#search-input {
+	max-width: 350px;
+}
+
+@media screen and (max-width: 450px) {
+	.filter-dropdown .v-filterselect {
+		max-width: 280px !important;
+	}	
+	
+	#search-input {
+		max-width: 200px !important;
+	}
+}
+
+.help-layout span {
+	font-size: 20px;
+	cursor: pointer;
+}
+
+/* Liferay related CSS below */
+
+#content .wrapper {
+	width: 100% !important;
+}
