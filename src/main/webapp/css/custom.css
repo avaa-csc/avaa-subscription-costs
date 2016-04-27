@@ -46,7 +46,7 @@ body.v-modal-window-open {
     white-space: pre-wrap !important;
     margin-bottom: 30px !important;
     margin-top: 20px !important;
-    color: blue !important;
+    color: #197DE1 !important;
 }
 
 .download-link .v-button-caption {
@@ -89,7 +89,7 @@ body.v-modal-window-open {
 
 .subscriptioncost-grid .v-grid-header .v-grid-column-header-content {
 	font-weight: bold !important;
-	background-color: #ddbff7!important;
+	background-color: #F9B233 !important;
 	background-image: none !important;
 	white-space: normal !important;
     line-height: 1.4 !important;
@@ -97,7 +97,7 @@ body.v-modal-window-open {
 }
 
 .subscriptioncost-grid .v-grid-row:hover .v-grid-cell {
-    background-color: #C7ADAD;
+    background-color: #197DE1;
 }
 
 @media screen and (max-width: 500px) {
