@@ -49,6 +49,11 @@ body.v-modal-window-open {
     color: #197DE1 !important;
 }
 
+.download-link-csv {
+	white-space: pre-wrap !important;
+	color: blue !important;
+}
+
 .download-link .v-button-caption {
 	font-size: 18px !important;
 }

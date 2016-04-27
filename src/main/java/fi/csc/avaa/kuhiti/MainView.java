@@ -1,12 +1,10 @@
 package fi.csc.avaa.kuhiti;
 
+import java.io.IOException;
 import java.io.InputStream;
 
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
+import com.vaadin.server.*;
 import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -25,6 +23,7 @@ import fi.csc.avaa.kuhiti.common.HelpWindow;
 import fi.csc.avaa.kuhiti.common.KuhitiCache;
 import fi.csc.avaa.kuhiti.common.KuhitiConst;
 import fi.csc.avaa.kuhiti.common.SearchField;
+import fi.csc.avaa.kuhiti.csv.CSVTools;
 import fi.csc.avaa.kuhiti.model.SubscriptionCost;
 import fi.csc.avaa.kuhiti.results.GridControlRow;
 import fi.csc.avaa.kuhiti.results.SubscriptionCostGrid;
@@ -40,16 +39,18 @@ import fi.csc.avaa.tools.vaadin.language.Translator;
 import fi.csc.avaa.vaadin.tools.VaadinTools;
 
 public class MainView extends CustomComponent implements Listener, LanguageChangeListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private SearchField searchField;
 	private SubscriptionCostSearchTools searchTools;
 	private ResultGridWrapper<SubscriptionCostGridBean, SubscriptionCost> gridWrapper;
-	
+
 	private Translator translator;
 	private VerticalLayout viewLayout;
 	private DropdownFilters dropdownFilters;
+
+	private CSVTools csvTools;
 
 	public MainView(Translator translator) {
 		this.translator = translator;
@@ -68,23 +69,24 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 	private void init() {
 		HorizontalLayout descRow = new HorizontalLayout();
 		descRow.setSizeFull();
-		
+
 		Label descLabel = new Label(translator.localize("Application.Description"), ContentMode.HTML);
-		TwoLanguageButtons langBtns = new TwoLanguageButtons(LanguageConst.LOCALE_FI, LanguageConst.LOCALE_EN, translator, false);
+		TwoLanguageButtons langBtns = new TwoLanguageButtons(LanguageConst.LOCALE_FI, LanguageConst.LOCALE_EN,
+				translator, false);
 		langBtns.addLanguageChangeListener(this);
-		
+
 		descRow.addComponents(descLabel, langBtns);
 		descRow.setExpandRatio(descLabel, 0.65f);
 		descRow.setExpandRatio(langBtns, 0.35f);
 		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_CENTER);
 		viewLayout.addComponent(descRow);
 		viewLayout.addComponent(createDownloadLink());
-		
+
 		HorizontalLayout searchBarRow = new HorizontalLayout();
 		searchBarRow.setSizeFull();
 		searchBarRow.setMargin(false);
 		searchBarRow.setSpacing(true);
-		
+
 		VerticalLayout searchFieldLayout = createSearchFieldLayout();
 		Button resetBtn = getSearchResetButton();
 		Label helpLabel = new Label(FontAwesome.QUESTION_CIRCLE.getHtml(), ContentMode.HTML);
@@ -95,11 +97,11 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			UI.getCurrent().addWindow(helpWindow);
 			helpWindow.focus();
 		});
-		
+
 		searchBarRow.addComponents(searchFieldLayout, resetBtn, helpClickLayout);
 		searchBarRow.setComponentAlignment(helpClickLayout, Alignment.MIDDLE_CENTER);
 		viewLayout.addComponents(searchBarRow);
-		
+
 		dropdownFilters = new DropdownFilters(translator);
 		dropdownFilters.addListener(this);
 		VerticalLayout dropdownLayout = new VerticalLayout(dropdownFilters);
@@ -109,21 +111,23 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		updateResults();
 		viewLayout.addComponent(gridWrapper);
 	}
-	
+
 	private Button getSearchResetButton() {
-		NativeButton resetBtn = VaadinTools.createLinkNativeButton(translator.localize("Search.Reset"), null, null, "reset-search borderless");
+		NativeButton resetBtn = VaadinTools.createLinkNativeButton(translator.localize("Search.Reset"), null, null,
+                "reset-search borderless");
 		resetBtn.addClickListener(e -> {
 			dropdownFilters.resetFilters();
 			searchField.reset();
 			gridWrapper.getCurrentGrid().populateGrid(KuhitiCache.getDataCache());
-			gridWrapper.getCurrentControlRow().createNewContents(KuhitiCache.getDataCache(), null);
+			gridWrapper.getCurrentControlSubscriptionCostsRow().createNewContents(KuhitiCache.getDataCache());
 		});
 		resetBtn.setIcon(FontAwesome.TRASH);
 		return resetBtn;
 	}
 
 	private Button createDownloadLink() {
-		Button downloadLink = VaadinTools.createLinkNativeButton(translator.localize("Download.Text"), FontAwesome.DOWNLOAD, null, "download-link borderless");
+		Button downloadLink = VaadinTools.createLinkNativeButton(translator.localize("Download.Text"), FontAwesome
+                .DOWNLOAD, null, "download-link borderless");
 		FileDownloader downloader = new FileDownloader(new StreamResource(new StreamSource() {
 			private static final long serialVersionUID = 1L;
 
@@ -135,7 +139,28 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		downloader.extend(downloadLink);
 		return downloadLink;
 	}
-	
+
+
+	private Button createCSVDownloadLink() {
+		csvTools = new CSVTools(translator, false);
+		Button downloadLink = VaadinTools.createLinkNativeButton(translator.localize("Download.Filtered"), FontAwesome
+                .DOWNLOAD, null, "download-link-csv borderless");
+
+		FileDownloader downloader = new FileDownloader(new StreamResource(null, "")) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws
+                    IOException {
+				setFileDownloadResource(csvTools.getSubsciptionCostCSVResource(searchTools.getSearchResults(),
+                        KuhitiConst.HEADERS_LIST));
+				return super.handleConnectorRequest(request, response, path);
+			}
+		};
+		downloader.extend(downloadLink);
+		return downloadLink;
+	}
+
 	private VerticalLayout createSearchFieldLayout() {
 		searchField = new SearchField("search-input", translator, 550);
 		searchField.addListener(e -> {
@@ -166,12 +191,12 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 	public void updateGrid(QueryBean queryBean) {
 		searchTools.queryData(KuhitiCache.getDataCache(), queryBean);
 		gridWrapper.getCurrentGrid().populateGrid(searchTools.getSearchResults());
-		gridWrapper.getCurrentControlRow().createNewContents(searchTools.getSearchResults(), queryBean);
+		gridWrapper.getCurrentControlSubscriptionCostsRow().createNewContents(searchTools.getSearchResults());
 	}
 
 	private void initResultGrid() {
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
-		GridControlRow resultControlRow = new GridControlRow(translator, false, false, false);
+		GridControlRow resultControlRow = new GridControlRow(translator, createCSVDownloadLink(), false);
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
 		gridWrapper.setMargin(new MarginInfo(true, false, true, false));
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);
