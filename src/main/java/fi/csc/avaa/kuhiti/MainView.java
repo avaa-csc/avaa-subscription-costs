@@ -2,6 +2,7 @@ package fi.csc.avaa.kuhiti;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.stream.Collectors;
 
 import com.vaadin.server.*;
 import com.vaadin.server.StreamResource.StreamSource;
@@ -120,6 +121,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			searchField.reset();
 			gridWrapper.getCurrentGrid().populateGrid(KuhitiCache.getDataCache());
 			gridWrapper.getCurrentControlSubscriptionCostsRow().createNewContents(KuhitiCache.getDataCache());
+			searchTools.setSearchResults(KuhitiCache.getDataCache().stream().collect(Collectors.toList()));
 		});
 		resetBtn.setIcon(FontAwesome.TRASH);
 		return resetBtn;
@@ -139,7 +141,6 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		downloader.extend(downloadLink);
 		return downloadLink;
 	}
-
 
 	private Button createCSVDownloadLink() {
 		csvTools = new CSVTools(translator, false);
