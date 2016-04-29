@@ -51,7 +51,7 @@ body.v-modal-window-open {
 
 .download-link-csv {
 	white-space: pre-wrap !important;
-	color: blue !important;
+	color: #197DE1 !important;
 }
 
 .download-link .v-button-caption {

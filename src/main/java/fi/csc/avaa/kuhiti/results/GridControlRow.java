@@ -13,7 +13,7 @@ public class GridControlRow extends ResultControlRow<SubscriptionCost> {
 	private static final long serialVersionUID = 1L;
 
 	public GridControlRow(Translator translator, Button csvButton) {
-		super(translator, csvButton, null, false);
+		super(translator, null, csvButton, false);
 	}
 
 	@Override
