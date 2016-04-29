@@ -120,7 +120,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			dropdownFilters.resetFilters();
 			searchField.reset();
 			gridWrapper.getCurrentGrid().populateGrid(KuhitiCache.getDataCache());
-			gridWrapper.getCurrentControlSubscriptionCostsRow().createNewContents(KuhitiCache.getDataCache());
+			gridWrapper.getCurrentControlRow().createNewContents(KuhitiCache.getDataCache(), null);
 			searchTools.setSearchResults(KuhitiCache.getDataCache().stream().collect(Collectors.toList()));
 		});
 		resetBtn.setIcon(FontAwesome.TRASH);
@@ -137,7 +137,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			public InputStream getStream() {
 				return MainView.class.getResourceAsStream(KuhitiConst.DATAFILE_PATH);
 			}
-		}, KuhitiConst.XLSX_DOWNLOAD_FILE_NAME));
+		}, translator.localize("Download.Text.Filename")));
 		downloader.extend(downloadLink);
 		return downloadLink;
 	}
@@ -192,12 +192,12 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 	public void updateGrid(QueryBean queryBean) {
 		searchTools.queryData(KuhitiCache.getDataCache(), queryBean);
 		gridWrapper.getCurrentGrid().populateGrid(searchTools.getSearchResults());
-		gridWrapper.getCurrentControlSubscriptionCostsRow().createNewContents(searchTools.getSearchResults());
+		gridWrapper.getCurrentControlRow().createNewContents(searchTools.getSearchResults(), queryBean);
 	}
 
 	private void initResultGrid() {
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
-		GridControlRow resultControlRow = new GridControlRow(translator, createCSVDownloadLink(), false);
+		GridControlRow resultControlRow = new GridControlRow(translator, createCSVDownloadLink());
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
 		gridWrapper.setMargin(new MarginInfo(true, false, true, false));
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);

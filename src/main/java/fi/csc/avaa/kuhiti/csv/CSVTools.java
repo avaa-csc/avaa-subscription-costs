@@ -39,7 +39,7 @@ public class CSVTools {
 					return new ByteArrayInputStream(output.getBytes());
 				}
 				return new ByteArrayInputStream(Const.STRING_EMPTY.getBytes());
-			}, CSV_DOWNLOAD_FILE_NAME);
+			}, translator.localize("Download.Filtered.Filename"));
 		} else {
 			log.warn("Nothing to write to csv file");
 			return new StreamResource(null, Const.STRING_EMPTY);
@@ -52,14 +52,14 @@ public class CSVTools {
 		for (SubscriptionCost subscriptionCost : data) {
 			final Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put(ORGTYPE_HEADER_KEY,  subscriptionCost.getOrgType());
-			rowData.put(ORGNAME_HEADER_KEY, subscriptionCost.getOrgName());
+			rowData.put(ORGTYPE_HEADER_KEY, translator.localize(TRANSLATION_KEY_PREFIX_ORGANISATION_TYPE + subscriptionCost.getOrgType()));
+			rowData.put(ORGNAME_HEADER_KEY, translator.localize(TRANSLATION_KEY_PREFIX_ORGANISATION_NAME + subscriptionCost.getOrgName()));
 			rowData.put(PUBLISHER_HEADER_KEY, subscriptionCost.getPublisher());
 			rowData.put(YEAR_HEADER_KEY, subscriptionCost.getYear());
 			rowData.put(PRICE_HEADER_KEY, subscriptionCost.getPrice());
 			rowData.put(MATERIAL_HEADER_KEY, subscriptionCost.getMaterials());
-			rowData.put(MATERIALTYPES_HEADER_KEY, subscriptionCost.getMaterialTypes());
-			rowData.put(ACQUISITIONWAYS_HEADER_KEY, subscriptionCost.getAcquisitionWays());
+			rowData.put(MATERIALTYPES_HEADER_KEY, getTranslations(subscriptionCost.getMaterialTypes(), translator, TRANSLATION_KEY_PREFIX_MATERIAL_TYPE));
+			rowData.put(ACQUISITIONWAYS_HEADER_KEY, getTranslations(subscriptionCost.getAcquisitionWays(), translator, TRANSLATION_KEY_PREFIX_MATERIAL_TYPE));
 
 			dataToWrite.add(rowData);
 		}
