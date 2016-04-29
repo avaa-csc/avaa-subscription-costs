@@ -59,7 +59,7 @@ public class CSVTools {
 			rowData.put(PRICE_HEADER_KEY, subscriptionCost.getPrice());
 			rowData.put(MATERIAL_HEADER_KEY, subscriptionCost.getMaterials());
 			rowData.put(MATERIALTYPES_HEADER_KEY, getTranslations(subscriptionCost.getMaterialTypes(), translator, TRANSLATION_KEY_PREFIX_MATERIAL_TYPE));
-			rowData.put(ACQUISITIONWAYS_HEADER_KEY, getTranslations(subscriptionCost.getAcquisitionWays(), translator, TRANSLATION_KEY_PREFIX_MATERIAL_TYPE));
+			rowData.put(ACQUISITIONWAYS_HEADER_KEY, getTranslations(subscriptionCost.getAcquisitionWays(), translator, TRANSLATION_KEY_PREFIX_ACQUISITION_WAY));
 
 			dataToWrite.add(rowData);
 		}
