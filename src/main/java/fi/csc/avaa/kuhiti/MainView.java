@@ -84,23 +84,18 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		viewLayout.addComponent(createDownloadLink());
 
 		HorizontalLayout searchBarRow = new HorizontalLayout();
-		searchBarRow.setSizeFull();
 		searchBarRow.setMargin(false);
 		searchBarRow.setSpacing(true);
 
 		VerticalLayout searchFieldLayout = createSearchFieldLayout();
 		Button resetBtn = getSearchResetButton();
-		Label helpLabel = new Label(FontAwesome.QUESTION_CIRCLE.getHtml(), ContentMode.HTML);
-		HorizontalLayout helpClickLayout = new HorizontalLayout(helpLabel);
-		helpClickLayout.addStyleName("help-layout");
-		helpClickLayout.addLayoutClickListener(e -> {
-			HelpWindow helpWindow = new HelpWindow(translator, 600, 500, true, false, true);
-			UI.getCurrent().addWindow(helpWindow);
-			helpWindow.focus();
-		});
+		HorizontalLayout searchControlBtns = new HorizontalLayout();
+		searchControlBtns.setSizeUndefined();
+		searchControlBtns.setSpacing(true);
+		Button helpBtn = getHelpButton();
+		searchControlBtns.addComponents(resetBtn, helpBtn);
 
-		searchBarRow.addComponents(searchFieldLayout, resetBtn, helpClickLayout);
-		searchBarRow.setComponentAlignment(helpClickLayout, Alignment.MIDDLE_CENTER);
+		searchBarRow.addComponents(searchFieldLayout, searchControlBtns);
 		viewLayout.addComponents(searchBarRow);
 
 		dropdownFilters = new DropdownFilters(translator);
@@ -114,7 +109,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 	}
 
 	private Button getSearchResetButton() {
-		NativeButton resetBtn = VaadinTools.createLinkNativeButton(translator.localize("Search.Reset"), null, null,
+		NativeButton resetBtn = VaadinTools.createLinkNativeButton(translator.localize("Search.Reset"), FontAwesome.TRASH, null,
                 "reset-search borderless");
 		resetBtn.addClickListener(e -> {
 			dropdownFilters.resetFilters();
@@ -123,8 +118,18 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			gridWrapper.getCurrentControlRow().createNewContents(KuhitiCache.getDataCache(), null);
 			searchTools.setSearchResults(KuhitiCache.getDataCache().stream().collect(Collectors.toList()));
 		});
-		resetBtn.setIcon(FontAwesome.TRASH);
 		return resetBtn;
+	}
+
+	private Button getHelpButton() {
+		NativeButton helpBtn = VaadinTools.createLinkNativeButton(translator.localize("Help.Description"), FontAwesome.QUESTION_CIRCLE, null,
+				"help-layout borderless");
+		helpBtn.addClickListener(e -> {
+			HelpWindow helpWindow = new HelpWindow(translator, 600, 500, true, false, true);
+			UI.getCurrent().addWindow(helpWindow);
+			helpWindow.focus();
+		});
+		return helpBtn;
 	}
 
 	private Button createDownloadLink() {

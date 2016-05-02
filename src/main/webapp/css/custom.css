@@ -126,11 +126,6 @@ body.v-modal-window-open {
 	}
 }
 
-.help-layout span {
-	font-size: 20px;
-	cursor: pointer;
-}
-
 /* Liferay related CSS below */
 
 #content .wrapper {
