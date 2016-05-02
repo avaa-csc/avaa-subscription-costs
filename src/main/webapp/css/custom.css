@@ -7,7 +7,7 @@ body.v-modal-window-open {
 }
 
 .valo .v-grid-cell {
-	padding-left: 2px !important;
+	padding-left: 0px !important;
 	padding-right: 0px !important;	
 }
 
@@ -97,12 +97,13 @@ body.v-modal-window-open {
 	background-color: #F9B233 !important;
 	background-image: none !important;
 	white-space: normal !important;
-    line-height: 1.4 !important;
+    line-height: 2.4 !important;
     height: 40px !important;
+    font-size: medium;
 }
 
 .subscriptioncost-grid .v-grid-row:hover .v-grid-cell {
-    background-color: #197DE1;
+    background-color: #B8C9E6;
 }
 
 @media screen and (max-width: 500px) {
