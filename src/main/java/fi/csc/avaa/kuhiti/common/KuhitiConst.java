@@ -29,6 +29,10 @@ public final class KuhitiConst {
 	public static final String MATERIALTYPES_HEADER_KEY = "Description.MaterialType";
 	public static final String ACQUISITIONWAYS_HEADER_KEY = "Description.AcquisitionWay";
 
+	public static final String XLSL_DOWNLOAD_FILE_EXTENTION = ".xlsx";
+	public static final String CSV_DOWNLOAD_FILE_EXTENTION = ".csv";
+	public static final String DOWNLOAD_TEXT_FILENAME = "Download.Text.Filename";
+
 	public static final String[] HEADERS_LIST = {ORGNAME_HEADER_KEY, ORGTYPE_HEADER_KEY, PUBLISHER_HEADER_KEY,
 			YEAR_HEADER_KEY, PRICE_HEADER_KEY, MATERIAL_HEADER_KEY, MATERIALTYPES_HEADER_KEY, ACQUISITIONWAYS_HEADER_KEY};
 

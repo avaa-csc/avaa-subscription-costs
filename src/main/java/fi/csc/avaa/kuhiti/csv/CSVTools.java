@@ -31,7 +31,7 @@ public class CSVTools {
 		this.isAdmin = isAdmin;
 	}
 
-	public Resource getSubsciptionCostCSVResource(Collection<SubscriptionCost> data, String[] headers) {
+	public Resource getSubsciptionCostCSVResource(Collection<SubscriptionCost> data, String[] headers, String downLoadFileName) {
 		if (data != null && data.size() > 0) {
 			return new StreamResource(() -> {
 				String output = getSubscriptionCostCSVContents(data, headers);
@@ -39,7 +39,7 @@ public class CSVTools {
 					return new ByteArrayInputStream(output.getBytes());
 				}
 				return new ByteArrayInputStream(Const.STRING_EMPTY.getBytes());
-			}, translator.localize("Download.Filtered.Filename"));
+			}, translator.localize(downLoadFileName) + CSV_DOWNLOAD_FILE_EXTENTION);
 		} else {
 			log.warn("Nothing to write to csv file");
 			return new StreamResource(null, Const.STRING_EMPTY);

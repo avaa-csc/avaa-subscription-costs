@@ -22,5 +22,4 @@ public class GridControlRow extends ResultControlRow<SubscriptionCost> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
