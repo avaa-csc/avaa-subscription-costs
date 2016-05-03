@@ -131,6 +131,10 @@ body.v-modal-window-open {
 	}
 }
 
+.result-control-row {
+	margin-bottom: -30px;
+}
+
 /* Liferay related CSS below */
 
 #content .wrapper {

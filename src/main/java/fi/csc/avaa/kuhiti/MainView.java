@@ -236,6 +236,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download" +
 				".Filtered")), createCSVDownloadLink());
 		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
+		resultControlRow.addStyleName("result-control-row");
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);
 	}
