@@ -88,7 +88,8 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		horizontalLayout.setMargin(new MarginInfo(true, false, true, false));
 		horizontalLayout.setSpacing(true);
 		horizontalLayout.setResponsive(true);
-		horizontalLayout.addComponents(new Label(translator.localize("Download.Text")), createCSVFullDataDownloadLink(), createXLSXFullDataDownloadLink());
+		horizontalLayout.addComponents(new Label(translator.localize("Download.Text")), createXLSXFullDataDownloadLink
+				(), new Label(translator.localize("Download.Text.Or")), createCSVFullDataDownloadLink());
 		viewLayout.addComponent(horizontalLayout);
 
 		HorizontalLayout searchBarRow = new HorizontalLayout();
@@ -225,7 +226,8 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 
 	private void initResultGrid() {
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
-		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download.Filtered")), createCSVDownloadLink());
+		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download" +
+				".Filtered")), createCSVDownloadLink());
 		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);
