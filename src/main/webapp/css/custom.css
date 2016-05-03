@@ -106,6 +106,11 @@ body.v-modal-window-open {
     background-color: #B8C9E6;
 }
 
+.subscriptioncost-grid .grid-cell-wrap {
+	white-space: normal !important;
+}
+
+
 @media screen and (max-width: 500px) {
 	.reset-search {
 		display: none !important;
