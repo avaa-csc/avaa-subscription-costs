@@ -84,13 +84,13 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_CENTER);
 		viewLayout.addComponent(descRow);
 
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.setMargin(new MarginInfo(true, false, true, false));
-		horizontalLayout.setSpacing(true);
-		horizontalLayout.setResponsive(true);
-		horizontalLayout.addComponents(new Label(translator.localize("Download.Text")), createXLSXFullDataDownloadLink
+		HorizontalLayout labelAndDownloadButtonsLayout = new HorizontalLayout();
+		labelAndDownloadButtonsLayout.setMargin(new MarginInfo(true, false, true, false));
+		labelAndDownloadButtonsLayout.setSpacing(true);
+		labelAndDownloadButtonsLayout.setResponsive(true);
+		labelAndDownloadButtonsLayout.addComponents(new Label(translator.localize("Download.Text")), createXLSXFullDataDownloadLink
 				(), new Label(translator.localize("Download.Text.Or")), createCSVFullDataDownloadLink());
-		viewLayout.addComponent(horizontalLayout);
+		viewLayout.addComponent(labelAndDownloadButtonsLayout);
 
 		HorizontalLayout searchBarRow = new HorizontalLayout();
 		searchBarRow.setMargin(false);
