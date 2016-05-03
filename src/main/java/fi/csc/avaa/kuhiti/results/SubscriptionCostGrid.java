@@ -15,7 +15,6 @@ import static fi.csc.avaa.kuhiti.results.SubscriptionCostGridBean.FieldName.YEAR
 import java.text.DecimalFormat;
 import java.util.Set;
 
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.renderers.NumberRenderer;
@@ -122,14 +121,21 @@ public class SubscriptionCostGrid extends AvaaBaseGrid<SubscriptionCostGridBean,
 			DecimalFormat decimalFormat = new DecimalFormat("0.00");
 			NumberRenderer decimalRenderer = new NumberRenderer(decimalFormat);
 			gridCol.setRenderer(decimalRenderer);
+			gridCol.setWidth(100);
 			break;
 		case PUBLISHER:
+			gridCol.setMinimumWidth(300);
+			gridCol.setMaximumWidth(500);
 			break;
 		case YEAR:
+			gridCol.setWidth(80);
 			break;
 		case ORG_NAME:
+			gridCol.setMaximumWidth(370);
+			gridCol.setMinimumWidth(280);
 			break;
 		case ORG_TYPE:
+			gridCol.setWidth(220);
 			break;
 		default:
 			break;
@@ -157,6 +163,25 @@ public class SubscriptionCostGrid extends AvaaBaseGrid<SubscriptionCostGridBean,
 
 	@Override
 	protected void setCustomHeaders() {
+		GridColumnName column1 = GridColumnName.getValuefromName(ORG_TYPE.name());
+		String orgTypeHtml = "<div class='v-label v-widget v-has-width'>" + translator.localize(column1.getValue()) + "</div>";
+		getDefaultHeaderRow().getCell(ORG_TYPE.getValue()).setHtml(orgTypeHtml);
+		
+		GridColumnName column2 = GridColumnName.getValuefromName(ORG_NAME.name());
+		String orgNameHtml = "<div class='v-label v-widget v-has-width'>" + translator.localize(column2.getValue()) + "</div>";
+		getDefaultHeaderRow().getCell(ORG_NAME.getValue()).setHtml(orgNameHtml);
+		
+		GridColumnName column3 = GridColumnName.getValuefromName(PUBLISHER.name());
+		String publisherHtml = "<div class='v-label v-widget v-has-width'>" + translator.localize(column3.getValue()) + "</div>";
+		getDefaultHeaderRow().getCell(PUBLISHER.getValue()).setHtml(publisherHtml);
+		
+		GridColumnName column4 = GridColumnName.getValuefromName(YEAR.name());
+		String yearHtml = "<div class='v-label v-widget v-has-width'>" + translator.localize(column4.getValue()) + "</div>";
+		getDefaultHeaderRow().getCell(YEAR.getValue()).setHtml(yearHtml);
+		
+		GridColumnName column5 = GridColumnName.getValuefromName(PRICE.name());
+		String priceHtml = "<div class='v-label v-widget v-has-width'>" + translator.localize(column5.getValue()) + "</div>";
+		getDefaultHeaderRow().getCell(PRICE.getValue()).setHtml(priceHtml);
 	}
 
 }

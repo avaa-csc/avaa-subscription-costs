@@ -22,6 +22,7 @@ import com.vaadin.ui.VerticalLayout;
 import fi.csc.avaa.kuhiti.common.DropdownFilters;
 import fi.csc.avaa.kuhiti.common.HelpWindow;
 import fi.csc.avaa.kuhiti.common.KuhitiCache;
+import fi.csc.avaa.kuhiti.common.KuhitiConst;
 import fi.csc.avaa.kuhiti.common.SearchField;
 import fi.csc.avaa.kuhiti.csv.CSVTools;
 import fi.csc.avaa.kuhiti.model.SubscriptionCost;
@@ -31,15 +32,12 @@ import fi.csc.avaa.kuhiti.results.SubscriptionCostGridBean;
 import fi.csc.avaa.kuhiti.search.QueryBean;
 import fi.csc.avaa.kuhiti.search.SubscriptionCostSearchTools;
 import fi.csc.avaa.tools.search.result.ResultGridWrapper;
-import fi.csc.avaa.tools.vaadin.customcomponent.HorizontalKeyValueComponent;
 import fi.csc.avaa.tools.vaadin.customcomponent.TwoLanguageButtons;
 import fi.csc.avaa.tools.vaadin.language.LanguageChangeEvent;
 import fi.csc.avaa.tools.vaadin.language.LanguageChangeListener;
 import fi.csc.avaa.tools.vaadin.language.LanguageConst;
 import fi.csc.avaa.tools.vaadin.language.Translator;
 import fi.csc.avaa.vaadin.tools.VaadinTools;
-
-import static fi.csc.avaa.kuhiti.common.KuhitiConst.*;
 
 public class MainView extends CustomComponent implements Listener, LanguageChangeListener {
 
@@ -83,13 +81,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		descRow.setExpandRatio(langBtns, 0.35f);
 		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_CENTER);
 		viewLayout.addComponent(descRow);
-
-		HorizontalLayout downloadButtonsLayout = new HorizontalLayout();
-		downloadButtonsLayout.addComponents(createXLSXFullDataDownloadLink(), createCSVFullDataDownloadLink());
-		HorizontalKeyValueComponent downdloadButtonsAndKeyLayout = new HorizontalKeyValueComponent(translator.localize
-				("Download.Text"), 3.0f, downloadButtonsLayout, 3.0f, false, null, null, null);
-		downdloadButtonsAndKeyLayout.setSizeUndefined();
-		viewLayout.addComponent(downdloadButtonsAndKeyLayout);
+		viewLayout.addComponent(createDownloadLink());
 
 		HorizontalLayout searchBarRow = new HorizontalLayout();
 		searchBarRow.setSizeFull();
@@ -123,7 +115,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 
 	private Button getSearchResetButton() {
 		NativeButton resetBtn = VaadinTools.createLinkNativeButton(translator.localize("Search.Reset"), null, null,
-				"reset-search borderless");
+                "reset-search borderless");
 		resetBtn.addClickListener(e -> {
 			dropdownFilters.resetFilters();
 			searchField.reset();
@@ -135,54 +127,34 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		return resetBtn;
 	}
 
-	private Button createXLSXFullDataDownloadLink() {
-		Button downloadLink = VaadinTools.createLinkNativeButton(XLSL_DOWNLOAD_FILE_EXTENTION, FontAwesome
-				.DOWNLOAD, null, "download-link-csv borderless");
+	private Button createDownloadLink() {
+		Button downloadLink = VaadinTools.createLinkNativeButton(translator.localize("Download.Text"), FontAwesome
+                .DOWNLOAD, null, "download-link borderless");
 		FileDownloader downloader = new FileDownloader(new StreamResource(new StreamSource() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public InputStream getStream() {
-				return MainView.class.getResourceAsStream(DATAFILE_PATH);
+				return MainView.class.getResourceAsStream(KuhitiConst.DATAFILE_PATH);
 			}
-		}, translator.localize(DOWNLOAD_TEXT_FILENAME) + XLSL_DOWNLOAD_FILE_EXTENTION));
-		downloader.extend(downloadLink);
-		return downloadLink;
-	}
-
-	private Button createCSVFullDataDownloadLink() {
-		csvTools = new CSVTools(translator, false);
-		Button downloadLink = VaadinTools.createLinkNativeButton(CSV_DOWNLOAD_FILE_EXTENTION, FontAwesome
-				.DOWNLOAD, null, "download-link-csv borderless");
-
-		FileDownloader downloader = new FileDownloader(new StreamResource(null, "")) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws
-					IOException {
-				setFileDownloadResource(csvTools.getSubsciptionCostCSVResource(KuhitiCache.getDataCache(),
-						HEADERS_LIST, DOWNLOAD_TEXT_FILENAME));
-				return super.handleConnectorRequest(request, response, path);
-			}
-		};
+		}, translator.localize("Download.Text.Filename")));
 		downloader.extend(downloadLink);
 		return downloadLink;
 	}
 
 	private Button createCSVDownloadLink() {
 		csvTools = new CSVTools(translator, false);
-		Button downloadLink = VaadinTools.createLinkNativeButton(CSV_DOWNLOAD_FILE_EXTENTION, FontAwesome
-				.DOWNLOAD, null, "download-link-csv borderless");
+		Button downloadLink = VaadinTools.createLinkNativeButton(translator.localize("Download.Filtered"), FontAwesome
+                .DOWNLOAD, null, "download-link-csv borderless");
 
 		FileDownloader downloader = new FileDownloader(new StreamResource(null, "")) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws
-					IOException {
+                    IOException {
 				setFileDownloadResource(csvTools.getSubsciptionCostCSVResource(searchTools.getSearchResults(),
-						HEADERS_LIST, "Download.Filtered.Filename"));
+                        KuhitiConst.HEADERS_LIST));
 				return super.handleConnectorRequest(request, response, path);
 			}
 		};
@@ -227,7 +199,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
 		GridControlRow resultControlRow = new GridControlRow(translator, createCSVDownloadLink());
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
-//		gridWrapper.setMargin(new MarginInfo(false, false, true, false));
+		gridWrapper.setMargin(new MarginInfo(true, false, true, false));
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);
 	}
 
