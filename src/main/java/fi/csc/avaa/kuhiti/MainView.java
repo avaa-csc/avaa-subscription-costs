@@ -84,13 +84,12 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_CENTER);
 		viewLayout.addComponent(descRow);
 
-		HorizontalLayout downloadButtonsLayout = new HorizontalLayout();
-		downloadButtonsLayout.addComponents(createXLSXFullDataDownloadLink(), createCSVFullDataDownloadLink());
-		HorizontalKeyValueComponent downdloadButtonsAndKeyLayout = new HorizontalKeyValueComponent(translator.localize
-				("Download.Text"), 3.0f, downloadButtonsLayout, 3.0f, false, null, null, null);
-		downdloadButtonsAndKeyLayout.setSizeUndefined();
-//		downloadButtonsLayout.setMargin(new MarginInfo(true, true, true, true));
-		viewLayout.addComponent(downdloadButtonsAndKeyLayout);
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setMargin(new MarginInfo(true, false, true, false));
+		horizontalLayout.setSpacing(true);
+		horizontalLayout.setResponsive(true);
+		horizontalLayout.addComponents(new Label(translator.localize("Download.Text")), createCSVFullDataDownloadLink(), createXLSXFullDataDownloadLink());
+		viewLayout.addComponent(horizontalLayout);
 
 		HorizontalLayout searchBarRow = new HorizontalLayout();
 		searchBarRow.setSizeFull();
@@ -226,9 +225,9 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 
 	private void initResultGrid() {
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
-		GridControlRow resultControlRow = new GridControlRow(translator, createCSVDownloadLink());
+		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download.Filtered")), createCSVDownloadLink());
+		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
-//		gridWrapper.setMargin(new MarginInfo(false, false, true, false));
 		gridWrapper.setWidth(80, Unit.PERCENTAGE);
 	}
 
