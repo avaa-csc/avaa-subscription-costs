@@ -121,19 +121,19 @@ public class SubscriptionCostGrid extends AvaaBaseGrid<SubscriptionCostGridBean,
 			DecimalFormat decimalFormat = new DecimalFormat("0");
 			NumberRenderer decimalRenderer = new NumberRenderer(decimalFormat);
 			gridCol.setRenderer(decimalRenderer);
-			gridCol.setWidth(100);
+			gridCol.setWidth(125);
 			break;
 		case PUBLISHER:
-			gridCol.setMinimumWidth(300);
+			gridCol.setMinimumWidth(375);
 			break;
 		case YEAR:
-			gridCol.setWidth(80);
+			gridCol.setWidth(100);
 			break;
 		case ORG_NAME:
-			gridCol.setMinimumWidth(280);
+			gridCol.setMinimumWidth(350);
 			break;
 		case ORG_TYPE:
-			gridCol.setWidth(220);
+			gridCol.setWidth(275);
 			break;
 		default:
 			break;

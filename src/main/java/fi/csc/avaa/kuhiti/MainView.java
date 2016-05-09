@@ -79,9 +79,9 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		langBtns.addLanguageChangeListener(this);
 
 		descRow.addComponents(descLabel, langBtns);
-		descRow.setExpandRatio(descLabel, 0.65f);
+		descRow.setExpandRatio(descLabel, 2.0f);
 		descRow.setExpandRatio(langBtns, 0.35f);
-		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_CENTER);
+		descRow.setComponentAlignment(langBtns, Alignment.MIDDLE_RIGHT);
 		viewLayout.addComponent(descRow);
 
 		HorizontalLayout labelAndDownloadButtonsLayout = new HorizontalLayout();
@@ -238,7 +238,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
 		resultControlRow.addStyleName("result-control-row");
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
-		gridWrapper.setWidth(80, Unit.PERCENTAGE);
+		gridWrapper.setSizeFull();
 	}
 
 	@Override
