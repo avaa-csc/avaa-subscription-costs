@@ -9,7 +9,7 @@ import fi.csc.avaa.tools.vaadin.language.Translator;
 
 public final class KuhitiConst {
 
-	public static final String DATAFILE_PATH = "/20160420 Kustantajahintatiedot_testiaineisto.xlsx";
+	public static final String DATAFILE_PATH = "/20160510 Kustantajahintatiedot_testiaineisto.xlsx";
 
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_TYPE = "Description.OrganisationType.";
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_NAME = "Description.OrganisationName.";
