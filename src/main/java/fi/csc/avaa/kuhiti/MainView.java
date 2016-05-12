@@ -31,7 +31,6 @@ import fi.csc.avaa.kuhiti.results.SubscriptionCostGridBean;
 import fi.csc.avaa.kuhiti.search.QueryBean;
 import fi.csc.avaa.kuhiti.search.SubscriptionCostSearchTools;
 import fi.csc.avaa.tools.search.result.ResultGridWrapper;
-import fi.csc.avaa.tools.vaadin.customcomponent.HorizontalKeyValueComponent;
 import fi.csc.avaa.tools.vaadin.customcomponent.TwoLanguageButtons;
 import fi.csc.avaa.tools.vaadin.language.LanguageChangeEvent;
 import fi.csc.avaa.tools.vaadin.language.LanguageChangeListener;
@@ -236,7 +235,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download" +
 				".Filtered")), createCSVDownloadLink());
 		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
-		resultControlRow.addStyleName("result-control-row");
+		resultControlRow.setStyleName("subscriptioncost-result-control-row");
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);
 		gridWrapper.setSizeFull();
 	}

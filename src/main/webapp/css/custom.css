@@ -131,10 +131,13 @@ body.v-modal-window-open {
 	}
 }
 
-.result-control-row {
+.subscriptioncost-result-control-row {
 	margin-bottom: -30px;
 }
 
+#FoundAmount {
+	vertical-align: -1px;
+}
 /* Liferay related CSS below */
 
 #content .wrapper {
