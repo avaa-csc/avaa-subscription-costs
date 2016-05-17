@@ -18,8 +18,6 @@ public final class KuhitiConst {
 
 	public static final String TRANSLATION_KEY_NOT_CHOSEN = "Application.NotChosen";
 
-	public static final String PORTLET_PREFERENCE_KEY_LANGUAGE = "language";
-
 	public static final String ORGTYPE_HEADER_KEY = "Description.OrganisationType";
 	public static final String ORGNAME_HEADER_KEY = "Description.OrganisationName";
 	public static final String PUBLISHER_HEADER_KEY = "Description.Publisher";
@@ -35,6 +33,7 @@ public final class KuhitiConst {
 
 	public static final String[] HEADERS_LIST = {ORGNAME_HEADER_KEY, ORGTYPE_HEADER_KEY, PUBLISHER_HEADER_KEY,
 			YEAR_HEADER_KEY, PRICE_HEADER_KEY, MATERIAL_HEADER_KEY, MATERIALTYPES_HEADER_KEY, ACQUISITIONWAYS_HEADER_KEY};
+	public static final String URI_FRAGMENT_LANG_FI = "fi";
 
 	public static Set<String> getTranslations(Set<String> keys, Translator translator, String keyPrefix) {
 		if (keys == null) {

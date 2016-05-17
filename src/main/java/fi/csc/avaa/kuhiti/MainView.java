@@ -8,16 +8,8 @@ import com.vaadin.server.*;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Component.Listener;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeButton;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 import fi.csc.avaa.kuhiti.common.DropdownFilters;
 import fi.csc.avaa.kuhiti.common.HelpWindow;
@@ -73,7 +65,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		descRow.setSizeFull();
 
 		Label descLabel = new Label(translator.localize("Application.Description"), ContentMode.HTML);
-		TwoLanguageButtons langBtns = new TwoLanguageButtons(LanguageConst.LOCALE_FI, LanguageConst.LOCALE_EN,
+		TwoLanguageButtons langBtns = new TwoLanguageButtons(LanguageConst.LOCALE_EN, LanguageConst.LOCALE_FI,
 				translator, false);
 		langBtns.addLanguageChangeListener(this);
 
@@ -91,20 +83,15 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 				(), new Label(translator.localize("Download.Text.Or")), createCSVFullDataDownloadLink());
 		viewLayout.addComponent(labelAndDownloadButtonsLayout);
 
-		HorizontalLayout searchBarRow = new HorizontalLayout();
-		searchBarRow.setMargin(false);
-		searchBarRow.setSpacing(true);
-
-		VerticalLayout searchFieldLayout = createSearchFieldLayout();
+		CssLayout searchBarRow = new CssLayout();
+		searchBarRow.setSizeFull();
+		SearchField searchField = createSearchField();
+		searchField.setSizeUndefined();
 		Button resetBtn = getSearchResetButton();
-
-		HorizontalLayout searchControlBtns = new HorizontalLayout();
-		searchControlBtns.setSizeUndefined();
-		searchControlBtns.setSpacing(true);
+		resetBtn.addStyleName("reset-btn");
 		Button helpBtn = getHelpButton();
-		searchControlBtns.addComponents(resetBtn, helpBtn);
-
-		searchBarRow.addComponents(searchFieldLayout, searchControlBtns);
+		helpBtn.addStyleName("help-btn");
+		searchBarRow.addComponents(searchField, resetBtn, helpBtn);
 		viewLayout.addComponents(searchBarRow);
 
 		dropdownFilters = new DropdownFilters(translator);
@@ -197,15 +184,12 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 		return downloadLink;
 	}
 
-	private VerticalLayout createSearchFieldLayout() {
+	private SearchField createSearchField() {
 		searchField = new SearchField("search-input", translator, 550);
 		searchField.addListener(e -> {
 			updateResults();
 		});
-		VerticalLayout searchFieldLayout = new VerticalLayout(searchField);
-		searchFieldLayout.setSpacing(true);
-		searchFieldLayout.addComponents(searchField);
-		return searchFieldLayout;
+		return searchField;
 	}
 
 	private void updateResults() {
@@ -232,8 +216,9 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 
 	private void initResultGrid() {
 		SubscriptionCostGrid grid = new SubscriptionCostGrid(translator);
-		GridControlRow resultControlRow = new GridControlRow(translator, new Label(translator.localize("Download" +
-				".Filtered")), createCSVDownloadLink());
+		Label csvDlLabel = new Label(translator.localize("Download.Filtered"));
+		csvDlLabel.addStyleName("filtered-csv-download-label");
+		GridControlRow resultControlRow = new GridControlRow(translator, csvDlLabel, createCSVDownloadLink());
 		resultControlRow.setMargin(new MarginInfo(false, false, true, false));
 		resultControlRow.setStyleName("subscriptioncost-result-control-row");
 		gridWrapper = new ResultGridWrapper<>(grid, resultControlRow);

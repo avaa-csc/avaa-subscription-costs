@@ -68,6 +68,10 @@ body.v-modal-window-open {
 	margin-right: 30px;
 }
 
+.reset-btn, .help-btn {
+    margin-left: 15px !important;
+}
+
 .subscriptioncost-grid .grid-cell-wrap {
 	white-space: normal !important;
 }
@@ -110,13 +114,6 @@ body.v-modal-window-open {
 	white-space: normal !important;
 }
 
-
-@media screen and (max-width: 500px) {
-	.reset-search {
-		display: none !important;
-	}	
-}
-
 #search-input {
 	max-width: 350px;
 }
@@ -129,6 +126,12 @@ body.v-modal-window-open {
 	#search-input {
 		max-width: 200px !important;
 	}
+}
+
+@media screen and (max-width: 900px) {
+    .filtered-csv-download-label {
+        display: none !important;
+    }
 }
 
 .subscriptioncost-result-control-row {

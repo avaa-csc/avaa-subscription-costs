@@ -19,7 +19,7 @@ public class UIProvider extends AvaaUIProvider {
 
 	@Override
 	protected Class<? extends UI> getEditModeUI(Locale loc) {
-		return EditUI.class;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
