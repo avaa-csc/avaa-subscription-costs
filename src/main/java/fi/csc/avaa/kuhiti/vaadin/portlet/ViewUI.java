@@ -37,7 +37,7 @@ public class ViewUI extends AvaaUI {
 
 	@SuppressWarnings("serial")
 	@WebServlet(urlPatterns = {"/VAADIN/*"}, asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = ViewUI.class)
+	@VaadinServletConfiguration(productionMode = true, ui = ViewUI.class)
 	public static class Servlet extends VaadinServlet {}
 
 	private static final long serialVersionUID = 1L;
