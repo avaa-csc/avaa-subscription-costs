@@ -103,10 +103,12 @@ public class SubscriptionCostGrid extends AvaaBaseGrid<SubscriptionCostGridBean,
 				SubscriptionCostGridBean gridItem = convertToGridBean(subscriptionCost);
 				container.addBean(gridItem);
 			}
+			setSelectionMode(SelectionMode.SINGLE);
 			setGridHeightInPixels(650);
 			setVisible(true);
 			return true;
 		}
+		setSelectionMode(SelectionMode.SINGLE);
 		setVisible(false);
 		return false;
 	}
