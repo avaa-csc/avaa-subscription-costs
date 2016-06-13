@@ -1,21 +1,14 @@
 package fi.csc.avaa.kuhiti;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.stream.Collectors;
-
 import com.vaadin.server.*;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Component.Listener;
-
-import fi.csc.avaa.kuhiti.common.DropdownFilters;
-import fi.csc.avaa.kuhiti.common.HelpWindow;
-import fi.csc.avaa.kuhiti.common.KuhitiCache;
-import fi.csc.avaa.kuhiti.common.SearchField;
+import fi.csc.avaa.kuhiti.common.*;
 import fi.csc.avaa.kuhiti.csv.CSVTools;
+import fi.csc.avaa.kuhiti.logging.AvaaStatisticsLogger;
 import fi.csc.avaa.kuhiti.model.SubscriptionCost;
 import fi.csc.avaa.kuhiti.results.GridControlRow;
 import fi.csc.avaa.kuhiti.results.SubscriptionCostGrid;
@@ -29,6 +22,15 @@ import fi.csc.avaa.tools.vaadin.language.LanguageChangeListener;
 import fi.csc.avaa.tools.vaadin.language.LanguageConst;
 import fi.csc.avaa.tools.vaadin.language.Translator;
 import fi.csc.avaa.vaadin.tools.VaadinTools;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 import static fi.csc.avaa.kuhiti.common.KuhitiConst.*;
 
@@ -45,6 +47,8 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 	private DropdownFilters dropdownFilters;
 
 	private CSVTools csvTools;
+
+	private static AvaaStatisticsLogger statLog = new AvaaStatisticsLogger(MainView.class.getName());
 
 	public MainView(Translator translator) {
 		this.translator = translator;
@@ -137,6 +141,15 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 
 			@Override
 			public InputStream getStream() {
+				long fileSize = 0L;
+				try {
+					Path file = Paths.get(getClass().getClassLoader()
+							.getResource(DATAFILE_PATH).toURI());
+					fileSize = Files.size(file);
+				} catch (IOException | URISyntaxException e) {
+//					e.printStackTrace();
+				}
+				statLog.logDownloadEvent(APPLICATION_NAME, DOWNLOAD_FILE_FULL_EXCEL, fileSize, LocalDateTime.now());
 				return MainView.class.getResourceAsStream(DATAFILE_PATH);
 			}
 		}, translator.localize(DOWNLOAD_TEXT_FILENAME) + XLSL_DOWNLOAD_FILE_EXTENTION));
@@ -155,6 +168,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			@Override
 			public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws
 					IOException {
+				statLog.logDownloadEvent(APPLICATION_NAME, DOWNLOAD_FILE_FULL_CSV, LocalDateTime.now());
 				setFileDownloadResource(csvTools.getSubsciptionCostCSVResource(KuhitiCache.getDataCache(),
 						HEADERS_LIST, DOWNLOAD_TEXT_FILENAME));
 				return super.handleConnectorRequest(request, response, path);
@@ -175,6 +189,7 @@ public class MainView extends CustomComponent implements Listener, LanguageChang
 			@Override
 			public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws
 					IOException {
+				statLog.logDownloadEvent(APPLICATION_NAME, DOWNLOAD_FILE_FILTERED_CSV, LocalDateTime.now());
 				setFileDownloadResource(csvTools.getSubsciptionCostCSVResource(searchTools.getSearchResults(),
 						HEADERS_LIST, "Download.Filtered.Filename"));
 				return super.handleConnectorRequest(request, response, path);

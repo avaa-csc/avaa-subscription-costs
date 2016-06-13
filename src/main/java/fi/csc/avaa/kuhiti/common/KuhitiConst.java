@@ -9,8 +9,13 @@ import fi.csc.avaa.tools.vaadin.language.Translator;
 
 public final class KuhitiConst {
 
-//	public static final String DATAFILE_PATH = "/20160510 Kustantajahintatiedot_testiaineisto.xlsx";
-	public static final String DATAFILE_PATH = "/20160607 Kustantajahintatiedot_koottu_v0.99.xlsx";
+	public static final String APPLICATION_NAME = "PUBLISHER_COSTS";
+	public static final String DOWNLOAD_FILE_FULL_EXCEL = "FULL_EXCEL";
+	public static final String DOWNLOAD_FILE_FULL_CSV = "FULL_CSV";
+	public static final String DOWNLOAD_FILE_FILTERED_CSV = "FILTERED_CSV";
+
+	public static final String DATAFILE_PATH = "/Publisher_Costs_Test_Data.xlsx";
+//	public static final String DATAFILE_PATH = "/20160613 Kustantajahintatiedot_koottu_v1.0.xlsx";
 
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_TYPE = "Description.OrganisationType.";
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_NAME = "Description.OrganisationName.";
