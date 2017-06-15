@@ -15,7 +15,6 @@ public final class KuhitiConst {
 	public static final String DOWNLOAD_FILE_FILTERED_CSV = "FILTERED_CSV";
 
 	public static final String DATAFILE_PATH = "/Publisher_Costs_Test_Data.xlsx";
-//	public static final String DATAFILE_PATH = "/20160613 Kustantajahintatiedot_koottu_v1.0.xlsx";
 
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_TYPE = "Description.OrganisationType.";
 	public static final String TRANSLATION_KEY_PREFIX_ORGANISATION_NAME = "Description.OrganisationName.";

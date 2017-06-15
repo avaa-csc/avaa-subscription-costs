@@ -14,7 +14,7 @@ public class GridControlRow extends ResultControlRow<SubscriptionCost> {
 	private static final long serialVersionUID = 1L;
 
 	public GridControlRow(Translator translator, Label label, Button csvButton) {
-		super(translator, label, csvButton);
+		super(translator.localize("Search.FoundAmount"), label, csvButton);
 	}
 
 	@Override
